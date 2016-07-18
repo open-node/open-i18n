@@ -1,6 +1,6 @@
 {
   "name": "open-i18n",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "i18n language locale",
   "main": "index.js",
   "scripts": {

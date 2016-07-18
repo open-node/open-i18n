@@ -22,7 +22,7 @@ if (action !== 'write') action = 'read';
 
 var pkg = require(process.cwd() + '/package.json');
 
-if (pkg.openI18n.regxps) regxps = pkg.openI18n.regxps;
+if (pkg && pkg.openI18n && pkg.openI18n.regxps) regxps = pkg.openI18n.regxps;
 
 var i18n = {
   read: function(argv) {
