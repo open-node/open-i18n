@@ -1,0 +1,31 @@
+{
+  "name": "open-i18n",
+  "version": "0.0.1",
+  "description": "i18n language locale",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "open-i18n": "./bin/i18n.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/open-node/open-i18n.git"
+  },
+  "keywords": [
+    "i18n",
+    "language",
+    "locale",
+    "po"
+  ],
+  "author": "Redstone Zhao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/open-node/open-i18n/issues"
+  },
+  "homepage": "https://github.com/open-node/open-i18n#readme",
+  "dependencies": {
+    "underscore": "^1.8.3"
+  }
+}
