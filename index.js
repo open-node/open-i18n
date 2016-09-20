@@ -1,5 +1,5 @@
 /** 返回 i18n 对象 */
-module.exports = function (languages, locale, locales) {
+module.exports = function(languages, locale, locales) {
   var langs;
   locale = (languages.indexOf(locale) > -1) ? locale : languages[0];
   langs = locales[locale] || {};
@@ -23,7 +23,7 @@ module.exports = function (languages, locale, locales) {
       }
       result = langs[key] || key;
       if (!args.length) return result;
-      return result.replace(/\{(\d+)\}/g, (m, i) => args[i]);
+      return result.replace(/\{(\d+)\}/g, function(m, i) { return args[i] });
     }
   };
 };
