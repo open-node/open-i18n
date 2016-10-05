@@ -24,6 +24,9 @@ var i18n = require('i18n');
 var t = i18n(languages, locale, LANGS).t;
 
 t('hello world'); // return "你好世界"
+
+// middle-ware auto handle res.body when request error
+server.use(i18n.middleWare(languages, defaultLanguage, LANGS))
 ```
 
 ## Collect language items
