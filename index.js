@@ -1,3 +1,5 @@
+var _     = require('lodash');
+
 /** 返回 i18n 对象 */
 var i18n = function(langs) {
   return {
@@ -32,13 +34,19 @@ var locales = [
     'headers',
     'accept-language',
     (v) => {
-      if (!U._.isString(v)) return;
+      if (!_.isString(v)) return;
       v.split(';')[0].split(',')[1]
     }
   ]
 ];
 
 i18n.middleWare = function (languages, defaultLanguage, LANGS) {
+
+  var TT = {};
+  _.each(languages, function(locale) {
+    TT[locale] = i18n(LANGS[locale] || {}).t
+  });
+
   return function (req, res, next) {
     req._locale = defaultLanguage;
 
@@ -60,7 +68,7 @@ i18n.middleWare = function (languages, defaultLanguage, LANGS) {
       error = body.body;
       if (!error) return send.apply(res, arguments);
 
-      t = i18n(LANGS[req._locale] || {}).t
+      t = TT[req._locale];
       translate = (x) => {
         if (x.value != null) {
           return t(x.message, x.value.value || x.value);
@@ -69,12 +77,12 @@ i18n.middleWare = function (languages, defaultLanguage, LANGS) {
         }
       };
 
-      if (U._.isArray(error.message)) {
-        error.message = U._.map(error.message, (x) => {
+      if (_.isArray(error.message)) {
+        error.message = _.map(error.message, (x) => {
           x.message = translate(x);
           return x;
         });
-      } else if (U._.isString(error.message)) {
+      } else if (_.isString(error.message)) {
         error.message = translate(error);
       }
 
