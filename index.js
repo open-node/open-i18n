@@ -51,7 +51,7 @@ i18n.middleWare = function (languages, defaultLanguage, LANGS) {
     req._locale = defaultLanguage;
 
     for (var x of locales) {
-      let v = req[x[0]][x[1]];
+      var v = req[x[0]][x[1]];
       if (x[2]) v = x[2](v);
       if (languages.indexOf(v) < 0) continue;
       req._locale = v;
