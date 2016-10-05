@@ -1,6 +1,9 @@
 # open-i18n
 =================
 
+[![Build status](https://api.travis-ci.org/open-node/open-i18n.svg?branch=master)](https://travis-ci.org/open-node/open-i18n)
+[![codecov](https://codecov.io/gh/open-node/open-i18n/branch/master/graph/badge.svg)](https://codecov.io/gh/open-node/open-i18n)
+
 ## Quick start
 <pre>npm install open-i18n --save</pre>
 
