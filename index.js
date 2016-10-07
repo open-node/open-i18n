@@ -27,18 +27,13 @@ var i18n = function(langs) {
   };
 };
 
-var locales = [
-  ['params', '_locale'],
-  ['user', 'language'],
-  [
-    'headers',
-    'accept-language',
-    function (v) {
-      if (!_.isString(v)) return;
-      return v.split(';')[0].split(',')[1];
-    }
-  ]
-];
+var currentLocale = function(req, languages) {
+  var locale = req.params._locale || req.user.language;
+  if (!locale && _.isString(req.headers['accept-language'])) {
+    locale = req.headers['accept-language'].split(';')[0].split(',')[1];
+  }
+  return languages.indexOf(locale) > -1 && locale;
+};
 
 i18n.middleWare = function (languages, defaultLanguage, LANGS) {
 
@@ -48,15 +43,7 @@ i18n.middleWare = function (languages, defaultLanguage, LANGS) {
   });
 
   return function (req, res, next) {
-    req._locale = defaultLanguage;
-
-    for (var x of locales) {
-      var v = req[x[0]][x[1]];
-      if (x[2]) v = x[2](v);
-      if (languages.indexOf(v) < 0) continue;
-      req._locale = v;
-      break;
-    }
+    req._locale = currentLocale(req, languages) || defaultLanguage;
 
     /** 改写默认的 res.send 为了处理 message */
     var send = res.send;
