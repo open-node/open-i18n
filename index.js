@@ -33,9 +33,9 @@ var locales = [
   [
     'headers',
     'accept-language',
-    (v) => {
+    function (v) {
       if (!_.isString(v)) return;
-      v.split(';')[0].split(',')[1]
+      return v.split(';')[0].split(',')[1];
     }
   ]
 ];
