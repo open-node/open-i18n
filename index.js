@@ -35,6 +35,14 @@ var currentLocale = function(req, languages) {
   return languages.indexOf(locale) > -1 && locale;
 };
 
+var translate = function(t, x) {
+  if (x.value != null) {
+    return t(x.message, x.value.value || x.value);
+  } else {
+    return t(x.message);
+  }
+};
+
 i18n.middleWare = function (languages, defaultLanguage, LANGS) {
 
   var TT = {};
@@ -48,7 +56,7 @@ i18n.middleWare = function (languages, defaultLanguage, LANGS) {
     /** 改写默认的 res.send 为了处理 message */
     var send = res.send;
     res.send = function (code, body, headers) {
-      var error, t, translate;
+      var error, t;
       if (!arguments.length) return send.apply(res, arguments);
       if (typeof code !== 'number') body = code;
       if (!(body instanceof Error)) return send.apply(res, arguments);
@@ -56,21 +64,13 @@ i18n.middleWare = function (languages, defaultLanguage, LANGS) {
       if (!error) return send.apply(res, arguments);
 
       t = TT[req._locale];
-      translate = (x) => {
-        if (x.value != null) {
-          return t(x.message, x.value.value || x.value);
-        } else {
-          return t(x.message);
-        }
-      };
-
       if (_.isArray(error.message)) {
-        error.message = _.map(error.message, (x) => {
-          x.message = translate(x);
+        error.message = _.map(error.message, function (x) {
+          x.message = translate(t, x);
           return x;
         });
       } else if (_.isString(error.message)) {
-        error.message = translate(error);
+        error.message = translate(t, error);
       }
 
       return send.apply(res, arguments);
